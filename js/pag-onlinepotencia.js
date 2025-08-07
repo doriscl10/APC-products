@@ -1,0 +1,177 @@
+document.addEventListener("DOMContentLoaded", function () {
+  const products = [
+    {
+      model: "FDC-RK1102U",
+      description:
+        "UPS On-Line 1kVA/1000W para rack. Protección de alta densidad para servidores y equipos de red.",
+      price: 86.9,
+    },
+    {
+      model: "FDC-RK0903U",
+      description:
+        "UPS On-Line 3kVA/2700W para rack. Fiabilidad y potencia para aplicaciones críticas en formato compacto.",
+      price: 93.0,
+    },
+    {
+      model: "FDC-CD610",
+      description:
+        "UPS On-Line de 6kVA/6000W. Solución robusta para proteger centros de datos pequeños y redes.",
+      price: 153.0,
+    },
+    {
+      model: "FDC-1502R",
+      description:
+        "UPS On-Line 1.5kVA/1350W para rack. Energía pura y continua para equipos de red sensibles.",
+      price: 521.0,
+    },
+    {
+      model: "FDC-2002T",
+      description:
+        "UPS On-Line 2kVA/1800W en formato torre. Máxima protección para servidores y sistemas de almacenamiento.",
+      price: 559.0,
+    },
+    {
+      model: "FDC-1002R-I",
+      description:
+        "UPS On-Line 1kVA/900W para rack. Ideal para servidores, almacenamiento y redes VoIP.",
+      price: 583.0,
+    },
+    {
+      model: "FDC-2012R-I",
+      description:
+        "UPS On-Line 2kVA/1800W para rack. Respaldo energético de alto rendimiento para equipos críticos.",
+      price: 739.0,
+    },
+    {
+      model: "FDC-203K-I",
+      description:
+        "UPS On-Line 3kVA/2700W. Potencia y fiabilidad para equipos médicos, de laboratorio y servidores.",
+      price: 849.0,
+    },
+    {
+      model: "FDC-3012R-I",
+      description:
+        "UPS On-Line 3kVA/2700W para rack, con factor de potencia de 0.9 para máxima eficiencia.",
+      price: 1015.0,
+    },
+    {
+      model: "FDC-206K",
+      description:
+        "UPS On-Line de 6kVA/6kW. Solución de alta potencia para centros de datos y aplicaciones industriales.",
+      price: 2047.0,
+    },
+    {
+      model: "FDC-210K",
+      description:
+        "UPS On-Line de 10kVA/10kW. Máxima capacidad y protección para infraestructuras de TI críticas.",
+      price: 2533.0,
+    },
+  ];
+
+  // --- Lógica de Paginación ---
+  const productGrid = document.getElementById("product-grid");
+  const paginationControls = document.getElementById("pagination-controls");
+  let currentPage = 1;
+  const itemsPerPage = 6; // 11 productos / 2 páginas (6 en la primera, 5 en la segunda)
+
+  // La lista ya está ordenada, pero es buena práctica asegurarse
+  products.sort((a, b) => a.price - b.price);
+
+  function displayProducts(page) {
+    productGrid.innerHTML = "";
+    const startIndex = (page - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const paginatedItems = products.slice(startIndex, endIndex);
+
+    paginatedItems.forEach((product) => {
+      const modelLower = product.model.toLowerCase();
+      const imageUrl = `https://web.netperu100.com/apc/images/${modelLower}_front.jpg`;
+      const pageUrl = `${product.model}.html`;
+
+      const priceHTML = `
+            <div class="mt-4 text-center">
+              <span class="text-2xl font-bold text-gray-900">${product.price.toLocaleString(
+                "en-US",
+                { style: "currency", currency: "USD" }
+              )}</span>
+            </div>
+            `;
+
+      const productCard = `
+          <div class="group flex flex-col bg-white border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+            <div class="w-full h-48 bg-gray-50 flex items-center justify-center p-4">
+              <img src="${imageUrl}" alt="${product.model}" class="max-h-full max-w-full object-contain" />
+            </div>
+            <div class="p-5 flex flex-col flex-grow">
+              <h3 class="text-lg font-bold text-gray-800 mb-2">${product.model}</h3>
+              <p class="text-sm text-gray-600 mb-4 flex-grow">${product.description}</p>
+              ${priceHTML}
+              <a href="${pageUrl}" class="mt-auto w-full text-center bg-blue-600 text-white font-semibold py-2.5 rounded-md hover:bg-blue-700 transition-colors duration-300">
+                Ver Producto
+              </a>
+            </div>
+          </div>
+        `;
+      productGrid.innerHTML += productCard;
+    });
+  }
+
+  function setupPagination() {
+    const pageCount = Math.ceil(products.length / itemsPerPage);
+    for (let i = 1; i <= pageCount; i++) {
+      const button = document.createElement("button");
+      button.innerText = i;
+      button.classList.add(
+        "px-4",
+        "py-2",
+        "rounded-md",
+        "font-semibold",
+        "transition-colors",
+        "duration-300"
+      );
+      if (i === currentPage) {
+        button.classList.add("bg-blue-600", "text-white", "cursor-default");
+      } else {
+        button.classList.add(
+          "bg-gray-200",
+          "text-gray-700",
+          "hover:bg-blue-500",
+          "hover:text-white"
+        );
+      }
+      button.addEventListener("click", () => {
+        currentPage = i;
+        displayProducts(currentPage);
+        updateActiveButton();
+      });
+      paginationControls.appendChild(button);
+    }
+  }
+
+  function updateActiveButton() {
+    const buttons = paginationControls.querySelectorAll("button");
+    buttons.forEach((button) => {
+      button.classList.remove("bg-blue-600", "text-white", "cursor-default");
+      button.classList.add(
+        "bg-gray-200",
+        "text-gray-700",
+        "hover:bg-blue-500",
+        "hover:text-white"
+      );
+
+      if (parseInt(button.innerText) === currentPage) {
+        button.classList.remove(
+          "bg-gray-200",
+          "text-gray-700",
+          "hover:bg-blue-500",
+          "hover:text-white"
+        );
+        button.classList.add("bg-blue-600", "text-white", "cursor-default");
+      }
+    });
+  }
+
+  // Inicializar
+  displayProducts(currentPage);
+  setupPagination();
+});
