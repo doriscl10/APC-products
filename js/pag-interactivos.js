@@ -222,9 +222,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const productGrid = document.getElementById("product-grid");
   const paginationControls = document.getElementById("pagination-controls");
   let currentPage = 1;
-  const itemsPerPage = 6; // 12 productos / 2 páginas = 6 por página
+  const itemsPerPage = 6;
 
-  // La lista ya está ordenada por precio, no es necesario .sort()
+  // --- CORRECCIÓN: Descomentar esta línea para ordenar la lista combinada ---
+  products.sort((a, b) => a.price - b.price);
 
   function displayProducts(page) {
     productGrid.innerHTML = "";
@@ -233,7 +234,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const paginatedItems = products.slice(startIndex, endIndex);
 
     paginatedItems.forEach((product) => {
-      const modelLower = product.model.toLowerCase();
+      const modelLower = product.model.toLowerCase().replace(/\s+/g, "-");
       const imageUrl = `https://web.netperu100.com/apc/images/${modelLower}_front.jpg`;
       const pageUrl = `${product.model}.html`;
 
@@ -243,6 +244,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 "en-US",
                 { style: "currency", currency: "USD" }
               )}</span>
+              <span class="text-sm font-medium text-gray-500 ml-1">+ IGV</span>
             </div>
             `;
 
@@ -266,58 +268,62 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function setupPagination() {
+    paginationControls.innerHTML = ""; // Limpiar controles antes de recrearlos
     const pageCount = Math.ceil(products.length / itemsPerPage);
-    for (let i = 1; i <= pageCount; i++) {
-      const button = document.createElement("button");
-      button.innerText = i;
-      button.classList.add(
-        "px-4",
-        "py-2",
-        "rounded-md",
-        "font-semibold",
-        "transition-colors",
-        "duration-300"
-      );
-      if (i === currentPage) {
-        button.classList.add("bg-blue-600", "text-white", "cursor-default");
-      } else {
+
+    if (pageCount > 1) {
+      paginationControls.style.display = "flex";
+      for (let i = 1; i <= pageCount; i++) {
+        const button = document.createElement("button");
+        button.innerText = i;
         button.classList.add(
-          "bg-gray-200",
-          "text-gray-700",
-          "hover:bg-blue-500",
-          "hover:text-white"
+          "px-4",
+          "py-2",
+          "rounded-md",
+          "font-semibold",
+          "transition-colors",
+          "duration-300"
         );
+        updateButtonAppearance(button, i);
+        button.addEventListener("click", () => {
+          currentPage = i;
+          displayProducts(currentPage);
+          updateAllButtons();
+        });
+        paginationControls.appendChild(button);
       }
-      button.addEventListener("click", () => {
-        currentPage = i;
-        displayProducts(currentPage);
-        updateActiveButton();
-      });
-      paginationControls.appendChild(button);
+    } else {
+      paginationControls.style.display = "none";
     }
   }
 
-  function updateActiveButton() {
+  function updateAllButtons() {
     const buttons = paginationControls.querySelectorAll("button");
     buttons.forEach((button) => {
-      button.classList.remove("bg-blue-600", "text-white", "cursor-default");
+      updateButtonAppearance(button, parseInt(button.innerText));
+    });
+  }
+
+  function updateButtonAppearance(button, pageIndex) {
+    button.classList.remove(
+      "bg-blue-600",
+      "text-white",
+      "cursor-default",
+      "bg-gray-200",
+      "text-gray-700",
+      "hover:bg-blue-500",
+      "hover:text-white"
+    );
+    if (pageIndex === currentPage) {
+      button.classList.add("bg-blue-600", "text-white", "cursor-default");
+    } else {
       button.classList.add(
         "bg-gray-200",
         "text-gray-700",
         "hover:bg-blue-500",
         "hover:text-white"
       );
-
-      if (parseInt(button.innerText) === currentPage) {
-        button.classList.remove(
-          "bg-gray-200",
-          "text-gray-700",
-          "hover:bg-blue-500",
-          "hover:text-white"
-        );
-        button.classList.add("bg-blue-600", "text-white", "cursor-default");
-      }
-    });
+    }
   }
 
   // Inicializar

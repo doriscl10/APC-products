@@ -25,46 +25,28 @@ document.addEventListener("DOMContentLoaded", function () {
       price: 22.9,
     },
     {
-      model: "FVP-6630B",
-      description:
-        "Protector de voltaje para equipos de audio/video. Evita daños por fluctuaciones de energía.",
-      price: 25.9,
-    },
-    {
-      model: "DC-350USBP",
-      description:
-        "Mini UPS DC para módems y routers. Mantiene tu internet activo durante cortes de energía.",
-      price: 47.9,
-    },
-    {
-      model: "FPP-T302",
-      description:
-        "Acondicionador de línea de 3000VA. Regulación precisa para equipos de alta sensibilidad.",
-      price: 350.0,
-    },
-    {
-      model: "FPP-T702",
-      description:
-        "Acondicionador de línea de 7500VA. Protección industrial para cargas pesadas y equipos críticos.",
-      price: 630.0,
-    },
-    {
-      model: "FPP-T1202",
-      description:
-        "Acondicionador de línea de 12000VA. Máxima capacidad y fiabilidad para entornos exigentes.",
-      price: 910.0,
-    },
-    {
       model: "SRVRK1",
       description:
         "Kit de rieles para montaje en rack de UPS de la serie SRV. Instalación fácil y segura.",
       price: 23.0,
     },
     {
+      model: "FVP-6630B",
+      description:
+        "Protector de voltaje para equipos de audio/video. Evita daños por fluctuaciones de energía.",
+      price: 25.9,
+    },
+    {
       model: "LSW500-IND",
       description:
         "Switch industrial de 5 puertos. Diseñado para operar en entornos industriales hostiles.",
       price: 27.0,
+    },
+    {
+      model: "DC-350USBP",
+      description:
+        "Mini UPS DC para módems y routers. Mantiene tu internet activo durante cortes de energía.",
+      price: 47.9,
     },
     {
       model: "SURTRK",
@@ -127,6 +109,12 @@ document.addEventListener("DOMContentLoaded", function () {
       price: 299.9,
     },
     {
+      model: "FPP-T302",
+      description:
+        "Acondicionador de línea de 3000VA. Regulación precisa para equipos de alta sensibilidad.",
+      price: 350.0,
+    },
+    {
       model: "AP7553",
       description:
         "PDU vertical Zero U de 32A. Alta capacidad para entornos de alta densidad.",
@@ -139,10 +127,22 @@ document.addEventListener("DOMContentLoaded", function () {
       price: 421.0,
     },
     {
+      model: "FPP-T702",
+      description:
+        "Acondicionador de línea de 7500VA. Protección industrial para cargas pesadas y equipos críticos.",
+      price: 630.0,
+    },
+    {
       model: "EPDU1116M",
       description:
         "PDU medida de 16A. Monitorización remota del consumo de energía para optimización.",
       price: 677.0,
+    },
+    {
+      model: "FPP-T1202",
+      description:
+        "Acondicionador de línea de 12000VA. Máxima capacidad y fiabilidad para entornos exigentes.",
+      price: 910.0,
     },
     {
       model: "AR3003",
@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
       model: "AP4421A",
       description:
-        "Switch de Transferencia Automática (ATS) para rack, 10A. Redundancia de energía para equipos con una sola fuente.",
+        "Switch de Transferencia Automática (ATS) para rack, 10A. Redundancia de energía.",
       price: 1080.0,
     },
     {
@@ -183,7 +183,7 @@ document.addEventListener("DOMContentLoaded", function () {
     {
       model: "AR3100",
       description:
-        "Armario NetShelter SX de 42U, 600mm de ancho. El estándar de la industria para racks de servidores.",
+        "Armario NetShelter SX de 42U, 600mm de ancho. El estándar de la industria para racks.",
       price: 1735.0,
     },
     {
@@ -222,17 +222,20 @@ document.addEventListener("DOMContentLoaded", function () {
         "Bypass de servicio para UPS de 5kVA en rack. Mantenimiento sin tiempo de inactividad.",
       price: null,
     },
-    // Puedes agregar más accesorios aquí en el futuro.
   ];
 
   // --- Lógica de Paginación ---
   const productGrid = document.getElementById("product-grid");
   const paginationControls = document.getElementById("pagination-controls");
   let currentPage = 1;
-  const itemsPerPage = 6; // Se mostrarán hasta 6 productos por página
+  const itemsPerPage = 6;
 
-  // La lista ya está ordenada, pero mantenemos el sort por si se añaden más en el futuro
-  products.sort((a, b) => a.price - b.price);
+  // 1. CORRECCIÓN: Ordenar correctamente, enviando los productos con precio `null` al final.
+  products.sort((a, b) => {
+    if (a.price === null) return 1;
+    if (b.price === null) return -1;
+    return a.price - b.price;
+  });
 
   function displayProducts(page) {
     productGrid.innerHTML = "";
@@ -245,12 +248,20 @@ document.addEventListener("DOMContentLoaded", function () {
       const imageUrl = `https://web.netperu100.com/apc/images/${modelLower}_front.jpg`;
       const pageUrl = `${product.model}.html`;
 
-      const priceHTML = `
+      // 2. CORRECCIÓN: Mostrar el precio o un texto alternativo si el precio es `null`.
+      const priceHTML =
+        product.price !== null
+          ? `
             <div class="mt-4 text-center">
               <span class="text-2xl font-bold text-gray-900">${product.price.toLocaleString(
                 "en-US",
                 { style: "currency", currency: "USD" }
               )}</span>
+            </div>
+            `
+          : `
+            <div class="mt-4 text-center">
+              <span class="text-xl font-bold text-gray-700">Precio a consultar</span>
             </div>
             `;
 
@@ -274,6 +285,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function setupPagination() {
+    paginationControls.innerHTML = "";
     const pageCount = Math.ceil(products.length / itemsPerPage);
 
     if (pageCount > 1) {
@@ -288,47 +300,44 @@ document.addEventListener("DOMContentLoaded", function () {
           "transition-colors",
           "duration-300"
         );
-        if (i === currentPage) {
-          button.classList.add("bg-blue-600", "text-white", "cursor-default");
-        } else {
-          button.classList.add(
-            "bg-gray-200",
-            "text-gray-700",
-            "hover:bg-blue-500",
-            "hover:text-white"
-          );
-        }
+        updateButtonAppearance(button, i);
         button.addEventListener("click", () => {
           currentPage = i;
           displayProducts(currentPage);
-          updateActiveButton();
+          updateAllButtons();
         });
         paginationControls.appendChild(button);
       }
     }
   }
 
-  function updateActiveButton() {
+  function updateAllButtons() {
     const buttons = paginationControls.querySelectorAll("button");
     buttons.forEach((button) => {
-      button.classList.remove("bg-blue-600", "text-white", "cursor-default");
+      updateButtonAppearance(button, parseInt(button.innerText));
+    });
+  }
+
+  function updateButtonAppearance(button, pageIndex) {
+    button.classList.remove(
+      "bg-blue-600",
+      "text-white",
+      "cursor-default",
+      "bg-gray-200",
+      "text-gray-700",
+      "hover:bg-blue-500",
+      "hover:text-white"
+    );
+    if (pageIndex === currentPage) {
+      button.classList.add("bg-blue-600", "text-white", "cursor-default");
+    } else {
       button.classList.add(
         "bg-gray-200",
         "text-gray-700",
         "hover:bg-blue-500",
         "hover:text-white"
       );
-
-      if (parseInt(button.innerText) === currentPage) {
-        button.classList.remove(
-          "bg-gray-200",
-          "text-gray-700",
-          "hover:bg-blue-500",
-          "hover:text-white"
-        );
-        button.classList.add("bg-blue-600", "text-white", "cursor-default");
-      }
-    });
+    }
   }
 
   // Inicializar

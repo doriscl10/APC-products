@@ -55,15 +55,9 @@ document.addEventListener("DOMContentLoaded", function () {
       price: 309.0,
     },
     {
-      model: "FPD-3012M0US",
-      description:
-        "UPS On-Line de 3000VA/2700W con tarjeta SNMP para gestión remota de la red. Control total.",
-      price: 479.0,
-    },
-    {
       model: "SRV1KI",
       description:
-        "APC Easy UPS On-Line de 1kVA. Protección de energía de doble conversión para entornos con energía inestable.",
+        "APC Easy UPS On-Line de 1kVA. Protección de doble conversión para entornos con energía inestable.",
       price: 339.0,
     },
     {
@@ -71,6 +65,12 @@ document.addEventListener("DOMContentLoaded", function () {
       description:
         "APC Easy UPS On-Line de 1kVA para rack. Diseño versátil para montaje en torre o rack.",
       price: 421.5,
+    },
+    {
+      model: "FPD-3012M0US",
+      description:
+        "UPS On-Line de 3000VA/2700W con tarjeta SNMP para gestión remota de la red. Control total.",
+      price: 479.0,
     },
     {
       model: "SURT1000XLI",
@@ -126,9 +126,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const productGrid = document.getElementById("product-grid");
   const paginationControls = document.getElementById("pagination-controls");
   let currentPage = 1;
-  const itemsPerPage = 6; // 10 productos / 2 páginas = 5 por página
+  const itemsPerPage = 6;
 
-  // La lista ya está ordenada, pero es buena práctica asegurarse
+  // --- CORRECCIÓN: Esta línea es crucial para ordenar la lista combinada ---
   products.sort((a, b) => a.price - b.price);
 
   function displayProducts(page) {
@@ -138,16 +138,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const paginatedItems = products.slice(startIndex, endIndex);
 
     paginatedItems.forEach((product) => {
-      const modelLower = product.model.toLowerCase();
+      const modelLower = product.model.toLowerCase().replace(/\s+/g, "-");
       const imageUrl = `https://web.netperu100.com/apc/images/${modelLower}_front.jpg`;
       const pageUrl = `${product.model}.html`;
 
+      // --- CORRECCIÓN: Añadido el texto "+ IGV" ---
       const priceHTML = `
             <div class="mt-4 text-center">
               <span class="text-2xl font-bold text-gray-900">${product.price.toLocaleString(
                 "en-US",
                 { style: "currency", currency: "USD" }
               )}</span>
+              <span class="text-sm font-medium text-gray-500 ml-1">+ IGV</span>
             </div>
             `;
 
@@ -171,61 +173,65 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function setupPagination() {
+    paginationControls.innerHTML = "";
     const pageCount = Math.ceil(products.length / itemsPerPage);
-    for (let i = 1; i <= pageCount; i++) {
-      const button = document.createElement("button");
-      button.innerText = i;
-      button.classList.add(
-        "px-4",
-        "py-2",
-        "rounded-md",
-        "font-semibold",
-        "transition-colors",
-        "duration-300"
-      );
-      if (i === currentPage) {
-        button.classList.add("bg-blue-600", "text-white", "cursor-default");
-      } else {
+
+    if (pageCount > 1) {
+      paginationControls.style.display = "flex";
+      for (let i = 1; i <= pageCount; i++) {
+        const button = document.createElement("button");
+        button.innerText = i;
         button.classList.add(
-          "bg-gray-200",
-          "text-gray-700",
-          "hover:bg-blue-500",
-          "hover:text-white"
+          "px-4",
+          "py-2",
+          "rounded-md",
+          "font-semibold",
+          "transition-colors",
+          "duration-300"
         );
+        updateButtonAppearance(button, i);
+        button.addEventListener("click", () => {
+          currentPage = i;
+          displayProducts(currentPage);
+          updateAllButtons();
+        });
+        paginationControls.appendChild(button);
       }
-      button.addEventListener("click", () => {
-        currentPage = i;
-        displayProducts(currentPage);
-        updateActiveButton();
-      });
-      paginationControls.appendChild(button);
+    } else {
+      paginationControls.style.display = "none";
     }
   }
 
-  function updateActiveButton() {
+  function updateAllButtons() {
     const buttons = paginationControls.querySelectorAll("button");
     buttons.forEach((button) => {
-      button.classList.remove("bg-blue-600", "text-white", "cursor-default");
+      updateButtonAppearance(button, parseInt(button.innerText));
+    });
+  }
+
+  function updateButtonAppearance(button, pageIndex) {
+    button.classList.remove(
+      "bg-blue-600",
+      "text-white",
+      "cursor-default",
+      "bg-gray-200",
+      "text-gray-700",
+      "hover:bg-blue-500",
+      "hover:text-white"
+    );
+    if (pageIndex === currentPage) {
+      button.classList.add("bg-blue-600", "text-white", "cursor-default");
+    } else {
       button.classList.add(
         "bg-gray-200",
         "text-gray-700",
         "hover:bg-blue-500",
         "hover:text-white"
       );
-
-      if (parseInt(button.innerText) === currentPage) {
-        button.classList.remove(
-          "bg-gray-200",
-          "text-gray-700",
-          "hover:bg-blue-500",
-          "hover:text-white"
-        );
-        button.classList.add("bg-blue-600", "text-white", "cursor-default");
-      }
-    });
+    }
   }
 
-  // Inicializar
+  // Inicializar la vista
   displayProducts(currentPage);
   setupPagination();
 });

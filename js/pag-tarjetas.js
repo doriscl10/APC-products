@@ -1,7 +1,4 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // ---- LISTA DE PRODUCTOS ----
-  // Para agregar productos en el futuro, simplemente llena este array con objetos.
-  // Ejemplo: { model: "AP9640", description: "Network Management Card 3", price: 350.00 }
   const products = [
     {
       model: "AP9544",
@@ -32,16 +29,14 @@ document.addEventListener("DOMContentLoaded", function () {
   const itemsPerPage = 6;
 
   function displayContent() {
-    // --- Condición clave: verificar si hay productos ---
     if (products.length === 0) {
-      productGrid.style.display = "none"; // Ocultar la cuadrícula
-      noProductsMessage.style.display = "block"; // Mostrar el mensaje
-      paginationControls.style.display = "none"; // Ocultar paginación
+      productGrid.style.display = "none";
+      noProductsMessage.style.display = "block";
+      paginationControls.style.display = "none";
     } else {
-      productGrid.style.display = "grid"; // Asegurarse de que la cuadrícula sea visible
-      noProductsMessage.style.display = "none"; // Ocultar el mensaje
+      productGrid.style.display = "grid";
+      noProductsMessage.style.display = "none";
 
-      // Ordenar por si se agregan en desorden
       products.sort((a, b) => a.price - b.price);
 
       displayProducts(currentPage);
@@ -60,12 +55,14 @@ document.addEventListener("DOMContentLoaded", function () {
       const imageUrl = `https://web.netperu100.com/apc/images/${modelLower}_front.jpg`;
       const pageUrl = `${product.model}.html`;
 
+      // --- CORRECCIÓN: Añadido el texto "+ IGV" ---
       const priceHTML = `
             <div class="mt-4 text-center">
               <span class="text-2xl font-bold text-gray-900">${product.price.toLocaleString(
                 "en-US",
                 { style: "currency", currency: "USD" }
               )}</span>
+              <span class="text-sm font-medium text-gray-500 ml-1">+ IGV</span>
             </div>
             `;
 

@@ -55,18 +55,6 @@ document.addEventListener("DOMContentLoaded", function () {
       price: 1015.0,
     },
     {
-      model: "FDC-206K",
-      description:
-        "UPS On-Line de 6kVA/6kW. Solución de alta potencia para centros de datos y aplicaciones industriales.",
-      price: 2047.0,
-    },
-    {
-      model: "FDC-210K",
-      description:
-        "UPS On-Line de 10kVA/10kW. Máxima capacidad y protección para infraestructuras de TI críticas.",
-      price: 2533.0,
-    },
-    {
       model: "SRV6KI",
       description:
         "APC Easy UPS On-Line de 6kVA. Potencia y protección de doble conversión para aplicaciones críticas.",
@@ -79,6 +67,12 @@ document.addEventListener("DOMContentLoaded", function () {
       price: 1989.0,
     },
     {
+      model: "FDC-206K",
+      description:
+        "UPS On-Line de 6kVA/6kW. Solución de alta potencia para centros de datos y aplicaciones industriales.",
+      price: 2047.0,
+    },
+    {
       model: "SRT5KXLI",
       description:
         "APC Smart-UPS On-Line de 5kVA. Protección de alta densidad con gestión de red inteligente.",
@@ -89,6 +83,12 @@ document.addEventListener("DOMContentLoaded", function () {
       description:
         "APC Smart-UPS On-Line de 6kVA. Potencia escalable y gestión avanzada para entornos críticos.",
       price: 2463.0,
+    },
+    {
+      model: "FDC-210K",
+      description:
+        "UPS On-Line de 10kVA/10kW. Máxima capacidad y protección para infraestructuras de TI críticas.",
+      price: 2533.0,
     },
     {
       model: "SRT6KXLI",
@@ -114,16 +114,15 @@ document.addEventListener("DOMContentLoaded", function () {
         "APC Smart-UPS On-Line de 10kVA. Máxima protección y disponibilidad con gestión inteligente de baterías.",
       price: 4490.0,
     },
-    
   ];
 
   // --- Lógica de Paginación ---
   const productGrid = document.getElementById("product-grid");
   const paginationControls = document.getElementById("pagination-controls");
   let currentPage = 1;
-  const itemsPerPage = 6; // 11 productos / 2 páginas (6 en la primera, 5 en la segunda)
+  const itemsPerPage = 6;
 
-  // La lista ya está ordenada, pero es buena práctica asegurarse
+  // --- CORRECCIÓN: Esta línea es crucial para ordenar la lista combinada ---
   products.sort((a, b) => a.price - b.price);
 
   function displayProducts(page) {
@@ -133,16 +132,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const paginatedItems = products.slice(startIndex, endIndex);
 
     paginatedItems.forEach((product) => {
-      const modelLower = product.model.toLowerCase();
+      const modelLower = product.model.toLowerCase().replace(/\s+/g, "-");
       const imageUrl = `https://web.netperu100.com/apc/images/${modelLower}_front.jpg`;
       const pageUrl = `${product.model}.html`;
 
+      // --- CORRECCIÓN: Añadido el texto "+ IGV" ---
       const priceHTML = `
             <div class="mt-4 text-center">
               <span class="text-2xl font-bold text-gray-900">${product.price.toLocaleString(
                 "en-US",
                 { style: "currency", currency: "USD" }
               )}</span>
+              <span class="text-sm font-medium text-gray-500 ml-1">+ IGV</span>
             </div>
             `;
 
@@ -166,61 +167,65 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function setupPagination() {
+    paginationControls.innerHTML = "";
     const pageCount = Math.ceil(products.length / itemsPerPage);
-    for (let i = 1; i <= pageCount; i++) {
-      const button = document.createElement("button");
-      button.innerText = i;
-      button.classList.add(
-        "px-4",
-        "py-2",
-        "rounded-md",
-        "font-semibold",
-        "transition-colors",
-        "duration-300"
-      );
-      if (i === currentPage) {
-        button.classList.add("bg-blue-600", "text-white", "cursor-default");
-      } else {
+
+    if (pageCount > 1) {
+      paginationControls.style.display = "flex";
+      for (let i = 1; i <= pageCount; i++) {
+        const button = document.createElement("button");
+        button.innerText = i;
         button.classList.add(
-          "bg-gray-200",
-          "text-gray-700",
-          "hover:bg-blue-500",
-          "hover:text-white"
+          "px-4",
+          "py-2",
+          "rounded-md",
+          "font-semibold",
+          "transition-colors",
+          "duration-300"
         );
+        updateButtonAppearance(button, i);
+        button.addEventListener("click", () => {
+          currentPage = i;
+          displayProducts(currentPage);
+          updateAllButtons();
+        });
+        paginationControls.appendChild(button);
       }
-      button.addEventListener("click", () => {
-        currentPage = i;
-        displayProducts(currentPage);
-        updateActiveButton();
-      });
-      paginationControls.appendChild(button);
+    } else {
+      paginationControls.style.display = "none";
     }
   }
 
-  function updateActiveButton() {
+  function updateAllButtons() {
     const buttons = paginationControls.querySelectorAll("button");
     buttons.forEach((button) => {
-      button.classList.remove("bg-blue-600", "text-white", "cursor-default");
+      updateButtonAppearance(button, parseInt(button.innerText));
+    });
+  }
+
+  function updateButtonAppearance(button, pageIndex) {
+    button.classList.remove(
+      "bg-blue-600",
+      "text-white",
+      "cursor-default",
+      "bg-gray-200",
+      "text-gray-700",
+      "hover:bg-blue-500",
+      "hover:text-white"
+    );
+    if (pageIndex === currentPage) {
+      button.classList.add("bg-blue-600", "text-white", "cursor-default");
+    } else {
       button.classList.add(
         "bg-gray-200",
         "text-gray-700",
         "hover:bg-blue-500",
         "hover:text-white"
       );
-
-      if (parseInt(button.innerText) === currentPage) {
-        button.classList.remove(
-          "bg-gray-200",
-          "text-gray-700",
-          "hover:bg-blue-500",
-          "hover:text-white"
-        );
-        button.classList.add("bg-blue-600", "text-white", "cursor-default");
-      }
-    });
+    }
   }
 
-  // Inicializar
+  // Inicializar la vista
   displayProducts(currentPage);
   setupPagination();
 });

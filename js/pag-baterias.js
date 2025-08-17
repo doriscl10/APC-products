@@ -78,18 +78,20 @@ document.addEventListener("DOMContentLoaded", function () {
         "Módulo de Batería Externa Smart-UPS SRT 72V 2.2/3kVA. Autonomía extendida para tus equipos.",
       price: null,
     },
-    // Puedes agregar más baterías aquí en el futuro.
-    // La paginación aparecerá automáticamente cuando sea necesario.
   ];
 
   // --- Lógica de Paginación ---
   const productGrid = document.getElementById("product-grid");
   const paginationControls = document.getElementById("pagination-controls");
   let currentPage = 1;
-  const itemsPerPage = 6; // Se mostrarán hasta 6 productos por página
+  const itemsPerPage = 6;
 
-  // Ordenar por precio por si se agregan más productos en desorden
-  products.sort((a, b) => a.price - b.price);
+  // CORRECCIÓN 1: Ordenar correctamente, enviando los productos con precio `null` al final.
+  products.sort((a, b) => {
+    if (a.price === null) return 1;
+    if (b.price === null) return -1;
+    return a.price - b.price;
+  });
 
   function displayProducts(page) {
     productGrid.innerHTML = "";
@@ -102,12 +104,20 @@ document.addEventListener("DOMContentLoaded", function () {
       const imageUrl = `https://web.netperu100.com/apc/images/${modelLower}_front.jpg`;
       const pageUrl = `${product.model}.html`;
 
-      const priceHTML = `
+      // CORRECCIÓN 2: Mostrar el precio o un texto alternativo si el precio es `null`.
+      const priceHTML =
+        product.price !== null
+          ? `
             <div class="mt-4 text-center">
               <span class="text-2xl font-bold text-gray-900">${product.price.toLocaleString(
                 "en-US",
                 { style: "currency", currency: "USD" }
               )}</span>
+            </div>
+            `
+          : `
+            <div class="mt-4 text-center">
+              <span class="text-xl font-bold text-gray-700">Precio a consultar</span>
             </div>
             `;
 
@@ -131,9 +141,9 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function setupPagination() {
+    paginationControls.innerHTML = "";
     const pageCount = Math.ceil(products.length / itemsPerPage);
 
-    // --- Condición clave: Solo mostrar controles si hay más de una página ---
     if (pageCount > 1) {
       for (let i = 1; i <= pageCount; i++) {
         const button = document.createElement("button");
@@ -146,50 +156,47 @@ document.addEventListener("DOMContentLoaded", function () {
           "transition-colors",
           "duration-300"
         );
-        if (i === currentPage) {
-          button.classList.add("bg-blue-600", "text-white", "cursor-default");
-        } else {
-          button.classList.add(
-            "bg-gray-200",
-            "text-gray-700",
-            "hover:bg-blue-500",
-            "hover:text-white"
-          );
-        }
+        updateButtonAppearance(button, i);
         button.addEventListener("click", () => {
           currentPage = i;
           displayProducts(currentPage);
-          updateActiveButton();
+          updateAllButtons();
         });
         paginationControls.appendChild(button);
       }
     }
   }
 
-  function updateActiveButton() {
+  function updateAllButtons() {
     const buttons = paginationControls.querySelectorAll("button");
     buttons.forEach((button) => {
-      button.classList.remove("bg-blue-600", "text-white", "cursor-default");
+      updateButtonAppearance(button, parseInt(button.innerText));
+    });
+  }
+
+  function updateButtonAppearance(button, pageIndex) {
+    button.classList.remove(
+      "bg-blue-600",
+      "text-white",
+      "cursor-default",
+      "bg-gray-200",
+      "text-gray-700",
+      "hover:bg-blue-500",
+      "hover:text-white"
+    );
+    if (pageIndex === currentPage) {
+      button.classList.add("bg-blue-600", "text-white", "cursor-default");
+    } else {
       button.classList.add(
         "bg-gray-200",
         "text-gray-700",
         "hover:bg-blue-500",
         "hover:text-white"
       );
-
-      if (parseInt(button.innerText) === currentPage) {
-        button.classList.remove(
-          "bg-gray-200",
-          "text-gray-700",
-          "hover:bg-blue-500",
-          "hover:text-white"
-        );
-        button.classList.add("bg-blue-600", "text-white", "cursor-default");
-      }
-    });
+    }
   }
 
-  // Inicializar
+  // Inicializar la vista
   displayProducts(currentPage);
   setupPagination();
 });
