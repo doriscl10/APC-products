@@ -66,6 +66,55 @@ document.addEventListener("DOMContentLoaded", function () {
         "UPS On-Line de 10kVA/10kW. Máxima capacidad y protección para infraestructuras de TI críticas.",
       price: 2533.0,
     },
+    {
+      model: "SRV6KI",
+      description:
+        "APC Easy UPS On-Line de 6kVA. Potencia y protección de doble conversión para aplicaciones críticas.",
+      price: 1899.0,
+    },
+    {
+      model: "SRTG5KXLI",
+      description:
+        "APC Smart-UPS On-Line de 5kVA. Rendimiento y escalabilidad para redes y centros de datos pequeños.",
+      price: 1989.0,
+    },
+    {
+      model: "SRT5KXLI",
+      description:
+        "APC Smart-UPS On-Line de 5kVA. Protección de alta densidad con gestión de red inteligente.",
+      price: 2453.0,
+    },
+    {
+      model: "SRTG6KXLI",
+      description:
+        "APC Smart-UPS On-Line de 6kVA. Potencia escalable y gestión avanzada para entornos críticos.",
+      price: 2463.0,
+    },
+    {
+      model: "SRT6KXLI",
+      description:
+        "APC Smart-UPS On-Line de 6kVA. Fiabilidad y rendimiento excepcionales para servidores y almacenamiento.",
+      price: 3019.0,
+    },
+    {
+      model: "SRV10KI",
+      description:
+        "APC Easy UPS On-Line de 10kVA. Alta capacidad para proteger cargas de trabajo pesadas y múltiples dispositivos.",
+      price: 3373.0,
+    },
+    {
+      model: "SRTG10KXLI",
+      description:
+        "APC Smart-UPS On-Line de 10kVA. Solución robusta y escalable para las necesidades de TI más exigentes.",
+      price: 3693.0,
+    },
+    {
+      model: "SRT10KXLI",
+      description:
+        "APC Smart-UPS On-Line de 10kVA. Máxima protección y disponibilidad con gestión inteligente de baterías.",
+      price: 4490.0,
+    },
+    
   ];
 
   // --- Lógica de Paginación ---

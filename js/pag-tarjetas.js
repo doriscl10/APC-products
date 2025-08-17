@@ -2,7 +2,26 @@ document.addEventListener("DOMContentLoaded", function () {
   // ---- LISTA DE PRODUCTOS ----
   // Para agregar productos en el futuro, simplemente llena este array con objetos.
   // Ejemplo: { model: "AP9640", description: "Network Management Card 3", price: 350.00 }
-  const products = [];
+  const products = [
+    {
+      model: "AP9544",
+      description:
+        "Tarjeta de Gestión de Red 3 (NMC3) con Monitoreo de Energía. Gestión remota para UPS.",
+      price: 118.9,
+    },
+    {
+      model: "AP9640",
+      description:
+        "Tarjeta de Gestión de Red 3 (NMC3). Ofrece monitoreo y control remoto de un UPS a través de un navegador web.",
+      price: 327.0,
+    },
+    {
+      model: "AP9641",
+      description:
+        "Tarjeta de Gestión de Red 3 (NMC3) con Monitoreo Ambiental. Gestión remota de UPS y sensores.",
+      price: 489.0,
+    },
+  ];
 
   // --- Lógica de Paginación y Visualización ---
   const productGrid = document.getElementById("product-grid");

@@ -72,6 +72,150 @@ document.addEventListener("DOMContentLoaded", function () {
         "UPS interactivo de 2200VA/1200W con pantalla LCD. Máximo respaldo para servidores y redes.",
       price: 300.0,
     },
+    {
+      model: "BV500I-MS",
+      description:
+        "APC Easy UPS de la serie BV. Protección de energía esencial para el hogar y la oficina pequeña.",
+      price: 88.9,
+    },
+    {
+      model: "BV650I-MS",
+      description:
+        "APC Easy UPS de la serie BV. Respaldo de batería confiable para equipos de bajo consumo.",
+      price: 95.0,
+    },
+    {
+      model: "BV800I-MS",
+      description:
+        "APC Easy UPS de la serie BV. Mayor capacidad para estaciones de trabajo y periféricos.",
+      price: 103.0,
+    },
+    {
+      model: "BV1000I-MS",
+      description:
+        "APC Easy UPS de la serie BV. Protección robusta con 1000VA de capacidad para múltiples dispositivos.",
+      price: 132.0,
+    },
+    {
+      model: "BX1200MI-MS",
+      description:
+        "APC Back-UPS de la serie BX. Respaldo y protección contra sobretensiones para computadoras y electrónica.",
+      price: 159.0,
+    },
+    {
+      model: "BR650MI",
+      description:
+        "APC Back-UPS Pro de la serie BR. UPS de alto rendimiento con regulación de voltaje (AVR) para gamers y profesionales.",
+      price: 173.0,
+    },
+    {
+      model: "BX1600MI-MS",
+      description:
+        "APC Back-UPS de la serie BX. Alta capacidad de 1600VA para sistemas más exigentes.",
+      price: 181.0,
+    },
+    {
+      model: "BR900MI",
+      description:
+        "APC Back-UPS Pro de la serie BR. Rendimiento premium y protección para equipos de alto valor.",
+      price: 205.9,
+    },
+    {
+      model: "BX2200MI-MS",
+      description:
+        "APC Back-UPS de la serie BX. Máxima capacidad de 2200VA para múltiples dispositivos críticos.",
+      price: 221.9,
+    },
+    {
+      model: "BR1300MI",
+      description:
+        "APC Back-UPS Pro de la serie BR. Energía confiable con AVR para mantener tus equipos seguros.",
+      price: 256.0,
+    },
+    {
+      model: "BR1600MI",
+      description:
+        "APC Back-UPS Pro de la serie BR. Potencia y características avanzadas para usuarios exigentes.",
+      price: 307.9,
+    },
+    {
+      model: "BR1500GI",
+      description:
+        "APC Back-UPS Pro de 1500VA. Eficiencia energética y protección superior para equipos de alto rendimiento.",
+      price: 315.0,
+    },
+    {
+      model: "SMV1500AI-MS",
+      description:
+        "APC Easy UPS Smart-UPS de la serie SMV. Protección de onda senoidal pura para servidores y equipos de red.",
+      price: 490.0,
+    },
+    {
+      model: "SMT1000IC",
+      description:
+        "APC Smart-UPS de la serie SMT con SmartConnect. UPS interactivo inteligente para servidores y redes.",
+      price: 545.9,
+    },
+    {
+      model: "SMT1500IC",
+      description:
+        "APC Smart-UPS de la serie SMT con SmartConnect. 1500VA de potencia inteligente y gestionable.",
+      price: 602.0,
+    },
+    {
+      model: "SMT1000RMI2UC",
+      description:
+        "APC Smart-UPS de la serie SMT para rack, con SmartConnect. Protección compacta para servidores.",
+      price: 638.0,
+    },
+    {
+      model: "SMV3000AI-MS",
+      description:
+        "APC Easy UPS Smart-UPS de la serie SMV. 3000VA de potencia de onda senoidal para cargas críticas.",
+      price: 687.0,
+    },
+    {
+      model: "SMT1500RMI2UC",
+      description:
+        "APC Smart-UPS de la serie SMT para rack, con SmartConnect. 1500VA de protección en formato 2U.",
+      price: 746.9,
+    },
+    {
+      model: "SMV2000AI-MS",
+      description:
+        "APC Easy UPS Smart-UPS de la serie SMV. Solución de 2000VA para proteger múltiples servidores y equipos de red.",
+      price: 779.0,
+    },
+    {
+      model: "SMT2200IC",
+      description:
+        "APC Smart-UPS de la serie SMT con SmartConnect. 2200VA de capacidad para entornos empresariales.",
+      price: 1223.0,
+    },
+    {
+      model: "SMT2200RMI2U",
+      description:
+        "APC Smart-UPS de la serie SMT para rack. 2200VA de potencia fiable en un diseño para montaje en rack.",
+      price: 1238.0,
+    },
+    {
+      model: "SMT3000IC",
+      description:
+        "APC Smart-UPS de la serie SMT con SmartConnect. Potencia de 3000VA para las aplicaciones más críticas.",
+      price: 1279.0,
+    },
+    {
+      model: "SMT2200RMI2UC",
+      description:
+        "APC Smart-UPS de la serie SMT para rack, con SmartConnect. 2200VA de potencia y gestión en la nube.",
+      price: 1295.0,
+    },
+    {
+      model: "SMT3000RMI2UC",
+      description:
+        "APC Smart-UPS de la serie SMT para rack, con SmartConnect. 3000VA de protección gestionable para rack.",
+      price: 1314.0,
+    },
   ];
 
   // --- Lógica de Paginación ---

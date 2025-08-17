@@ -12,6 +12,72 @@ document.addEventListener("DOMContentLoaded", function () {
         "Batería de alta capacidad de 12V y 100Ah. Perfecta para sistemas UPS de gran envergadura.",
       price: 295.0,
     },
+    {
+      model: "SRV36BP-9A",
+      description:
+        "Módulo de Batería para Easy UPS SRV. Extiende la autonomía de tu UPS On-Line.",
+      price: 299.0,
+    },
+    {
+      model: "RBC31",
+      description:
+        "Cartucho de Batería de Reemplazo APC #31. Compatible con varios modelos de UPS.",
+      price: 321.0,
+    },
+    {
+      model: "APCRBC141",
+      description:
+        "Cartucho de Batería de Reemplazo APC #141. Para modelos Smart-UPS y Back-UPS.",
+      price: 349.0,
+    },
+    {
+      model: "RBC55",
+      description:
+        "Cartucho de Batería de Reemplazo APC #55. Para modelos Smart-UPS de 2200/3000VA.",
+      price: 559.0,
+    },
+    {
+      model: "APCRBC140",
+      description:
+        "Cartucho de Batería de Reemplazo APC #140. Compatible con modelos SRT de alta potencia.",
+      price: 671.9,
+    },
+    {
+      model: "SURT48XLBP",
+      description:
+        "Módulo de Batería Externa Smart-UPS RT 48V. Aumenta significativamente la autonomía.",
+      price: 675.0,
+    },
+    {
+      model: "SRT96BP",
+      description:
+        "Módulo de Batería Externa Smart-UPS SRT 96V 2.2/3kVA. Para largas autonomías.",
+      price: 1015.0,
+    },
+    {
+      model: "SRTG192XLBP4",
+      description:
+        "Módulo de Batería Externa para Smart-UPS On-Line 192V. Compatible con modelos SRTG.",
+      price: 1175.0,
+    },
+    {
+      model: "SRT192BP",
+      description:
+        "Módulo de Batería Externa Smart-UPS SRT 192V 5/6kVA. Solución de autonomía escalable.",
+      price: 1215.0,
+    },
+    {
+      model: "SRT192BP2",
+      description:
+        "Módulo de Batería Externa Smart-UPS SRT 192V 8/10kVA. Máxima autonomía para equipos críticos.",
+      price: 1334.0,
+    },
+    {
+      model: "SRT72BP",
+      description:
+        "Módulo de Batería Externa Smart-UPS SRT 72V 2.2/3kVA. Autonomía extendida para tus equipos.",
+      price: null,
+    },
     // Puedes agregar más baterías aquí en el futuro.
     // La paginación aparecerá automáticamente cuando sea necesario.
   ];

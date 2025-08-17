@@ -60,6 +60,66 @@ document.addEventListener("DOMContentLoaded", function () {
         "UPS On-Line de 3000VA/2700W con tarjeta SNMP para gestión remota de la red. Control total.",
       price: 479.0,
     },
+    {
+      model: "SRV1KI",
+      description:
+        "APC Easy UPS On-Line de 1kVA. Protección de energía de doble conversión para entornos con energía inestable.",
+      price: 339.0,
+    },
+    {
+      model: "SRV1KRI",
+      description:
+        "APC Easy UPS On-Line de 1kVA para rack. Diseño versátil para montaje en torre o rack.",
+      price: 421.5,
+    },
+    {
+      model: "SURT1000XLI",
+      description:
+        "APC Smart-UPS RT On-Line de 1kVA. Alto rendimiento y autonomía escalable para equipos críticos.",
+      price: 681.5,
+    },
+    {
+      model: "SRV2KI",
+      description:
+        "APC Easy UPS On-Line de 2kVA. Mayor capacidad para proteger múltiples servidores y equipos de red.",
+      price: 756.9,
+    },
+    {
+      model: "SRV3KI",
+      description:
+        "APC Easy UPS On-Line de 3kVA. Potencia y fiabilidad para cargas de trabajo más pesadas.",
+      price: 768.0,
+    },
+    {
+      model: "SRV2KRI",
+      description:
+        "APC Easy UPS On-Line de 2kVA para rack. Protección de doble conversión en un formato compacto para rack.",
+      price: 783.9,
+    },
+    {
+      model: "SRV3KRI",
+      description:
+        "APC Easy UPS On-Line de 3kVA para rack. Alta capacidad y flexibilidad de montaje para servidores.",
+      price: 1031.0,
+    },
+    {
+      model: "SRT1000XLI",
+      description:
+        "APC Smart-UPS On-Line de 1kVA. Protección de alta densidad con tiempo de transferencia cero.",
+      price: 1069.0,
+    },
+    {
+      model: "SRT2200XLI",
+      description:
+        "APC Smart-UPS On-Line de 2.2kVA. Potencia y protección de nivel superior para redes y servidores.",
+      price: 1321.0,
+    },
+    {
+      model: "SRT3000XLI",
+      description:
+        "APC Smart-UPS On-Line de 3kVA. Máxima protección y disponibilidad para aplicaciones críticas.",
+      price: 1591.0,
+    },
   ];
 
   // --- Lógica de Paginación ---
